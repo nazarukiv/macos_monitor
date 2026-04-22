@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.nazarukiv.macos_monitor.HelloController">
+<VBox alignment="CENTER" spacing="18.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.nazarukiv.macos_monitor.ui.DashboardController">
   <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
   </padding>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
+  <Label fx:id="cpuUsageLabel" maxWidth="Infinity" text="CPU: 0%"/>
+  <ProgressBar fx:id="cpuBar" maxWidth="Infinity" prefWidth="320.0" progress="0.0"/>
+
+  <Label fx:id="ramUsageLabel" maxWidth="Infinity" text="RAM: 0 / 0 GB"/>
+  <ProgressBar fx:id="ramBar" maxWidth="Infinity" prefWidth="320.0" progress="0.0"/>
+
+  <LineChart fx:id="cpuChart" animated="false" createSymbols="false" legendVisible="false" maxWidth="Infinity" prefHeight="220.0" prefWidth="320.0" title="CPU History">
+    <xAxis>
+      <NumberAxis fx:id="xAxis" forceZeroInRange="false" label="Time (s)"/>
+    </xAxis>
+    <yAxis>
+      <NumberAxis fx:id="yAxis" autoRanging="false" label="CPU %" lowerBound="0.0" upperBound="100.0"/>
+    </yAxis>
+  </LineChart>
+
+  <TableView fx:id="processTable" maxWidth="Infinity" prefHeight="240.0" prefWidth="320.0"/>
 </VBox>
