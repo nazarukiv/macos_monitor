@@ -18,14 +18,20 @@ public class HelloApplication extends Application {
                 HelloApplication.class.getResource("/com/nazarukiv/macos_monitor/hello-view.fxml")
         );
 
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1100, 760);
+        scene.getStylesheets().add(
+                HelloApplication.class.getResource("/com/nazarukiv/macos_monitor/styles.css").toExternalForm()
+        );
 
         DashboardController controller = fxmlLoader.getController();
         SystemMetricsService service = new SystemMetricsService();
+        controller.setSystemMetricsService(service);
 
         scheduler = new MetricsScheduler(service, controller);
 
         stage.setTitle("Dashboard");
+        stage.setMinWidth(960);
+        stage.setMinHeight(680);
         stage.setScene(scene);
         stage.show();
 
