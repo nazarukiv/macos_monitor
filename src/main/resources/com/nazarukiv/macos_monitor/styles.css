@@ -108,6 +108,27 @@
     -fx-border-color: #2b7cff;
 }
 
+.text-area {
+    -fx-background-color: #1f1f1f;
+    -fx-background-insets: 0;
+    -fx-background-radius: 14px;
+    -fx-border-color: rgba(255, 255, 255, 0.08);
+    -fx-border-radius: 14px;
+    -fx-text-fill: #f2f2f2;
+    -fx-prompt-text-fill: #7f7f85;
+    -fx-highlight-fill: #2b7cff;
+    -fx-highlight-text-fill: #ffffff;
+}
+
+.text-area .content {
+    -fx-background-color: #1f1f1f;
+    -fx-background-radius: 14px;
+}
+
+.text-area:focused {
+    -fx-border-color: #2b7cff;
+}
+
 .progress-bar {
     -fx-background-insets: 0;
     -fx-accent: #2b7cff;

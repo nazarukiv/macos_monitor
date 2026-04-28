@@ -5,6 +5,8 @@ import com.nazarukiv.macos_monitor.model.CpuInfo;
 import com.nazarukiv.macos_monitor.model.MemoryInfo;
 import com.nazarukiv.macos_monitor.model.ProcessDetails;
 import com.nazarukiv.macos_monitor.model.ProcessInfo;
+import com.nazarukiv.macos_monitor.service.AiAssistantService;
+import com.nazarukiv.macos_monitor.service.OpenAiAssistantService;
 import com.nazarukiv.macos_monitor.service.SystemMetricsService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,6 +82,9 @@ public class DashboardController {
     @FXML
     private Button connectionButton;
 
+    @FXML
+    private Button assistantButton;
+
     private FilteredList<ProcessInfo> filteredProcesses;
     private ObservableList<ProcessInfo> masterData;
     private XYChart.Series<Number, Number> cpuSeries;
@@ -87,8 +92,10 @@ public class DashboardController {
     private boolean isRunning = true;
     private double maxCpu = 0;
     private SystemMetricsService systemMetricsService;
+    private final AiAssistantService aiAssistantService = new OpenAiAssistantService();
     private Stage networkStage;
     private NetworkController networkController;
+    private Stage assistantStage;
 
     @FXML
     private void initialize() {
@@ -288,6 +295,35 @@ public class DashboardController {
         networkStage.centerOnScreen();
         networkStage.toFront();
         networkStage.requestFocus();
+    }
+
+    @FXML
+    private void openAssistantWindow() throws IOException {
+        if (assistantStage != null && assistantStage.isShowing()) {
+            assistantStage.toFront();
+            assistantStage.requestFocus();
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(
+                HelloApplication.class.getResource("/com/nazarukiv/macos_monitor/ai-assistant-view.fxml")
+        );
+
+        Scene scene = new Scene(loader.load(), 620, 560);
+        applyStyles(scene);
+
+        AiAssistantController controller = loader.getController();
+        controller.setDependencies(systemMetricsService, aiAssistantService);
+
+        assistantStage = new Stage();
+        assistantStage.setTitle("AI Diagnostic Assistant");
+        assistantStage.setScene(scene);
+        assistantStage.setMinWidth(540);
+        assistantStage.setMinHeight(500);
+        assistantStage.show();
+        assistantStage.centerOnScreen();
+        assistantStage.toFront();
+        assistantStage.requestFocus();
     }
 
     private void openProcessDetailsWindow(ProcessInfo processInfo) {

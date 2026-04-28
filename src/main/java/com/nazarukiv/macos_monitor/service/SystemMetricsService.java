@@ -7,6 +7,7 @@ import com.nazarukiv.macos_monitor.model.NetworkInfo;
 import com.nazarukiv.macos_monitor.model.ProcessDetails;
 import com.nazarukiv.macos_monitor.model.ProcessInfo;
 import com.nazarukiv.macos_monitor.model.SystemDetails;
+import com.nazarukiv.macos_monitor.model.SystemSnapshot;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -59,7 +61,7 @@ public class SystemMetricsService {
         this.previousCpuTicks = processor.getSystemCpuLoadTicks();
     }
 
-    public CpuInfo getCpuInfo() {
+    public synchronized CpuInfo getCpuInfo() {
         double cpuUsage = processor.getSystemCpuLoadBetweenTicks(previousCpuTicks) * 100;
         cpuUsage = Math.max(0, Math.min(cpuUsage, 100));
 
@@ -195,6 +197,26 @@ public class SystemMetricsService {
                 status,
                 interfaceName,
                 activeConnections
+        );
+    }
+
+    public synchronized SystemSnapshot captureSnapshot(String concern) {
+        CpuInfo cpuInfo = getCpuInfo();
+        MemoryInfo memoryInfo = getMemoryInfo();
+        BatteryInfo batteryInfo = getBatteryInfo();
+        NetworkInfo networkInfo = getNetworkSpeed();
+        SystemDetails systemDetails = getSystemInfo();
+        List<ProcessInfo> processes = getProcesses();
+
+        return new SystemSnapshot(
+                concern,
+                LocalDateTime.now(),
+                cpuInfo,
+                memoryInfo,
+                batteryInfo,
+                networkInfo,
+                systemDetails,
+                processes
         );
     }
 

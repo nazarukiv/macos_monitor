@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="16.0"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.nazarukiv.macos_monitor.ui.AiAssistantController"
+      styleClass="popup-root">
+  <padding>
+    <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+  </padding>
+
+  <HBox alignment="CENTER_LEFT" spacing="12.0">
+    <Label text="AI Diagnostic Assistant" styleClass="popup-title"/>
+    <Region HBox.hgrow="ALWAYS"/>
+    <Button fx:id="analyzeButton" onAction="#analyzeConcern" text="Analyze"/>
+  </HBox>
+
+  <Label text="Describe the problem in plain English. Example: My Mac feels slow, battery drains fast, or Wi-Fi is unstable."
+         wrapText="true"
+         styleClass="popup-detail"/>
+
+  <VBox spacing="8.0" styleClass="card">
+    <Label text="Your concern" styleClass="metric-title"/>
+    <TextArea fx:id="concernInput"
+              prefHeight="110.0"
+              promptText="My Mac gets hot when I browse and the battery drops quickly..."
+              wrapText="true"/>
+  </VBox>
+
+  <HBox spacing="12.0">
+    <Label fx:id="statusLabel" text="Ready." styleClass="popup-detail"/>
+    <Region HBox.hgrow="ALWAYS"/>
+    <Label fx:id="providerLabel" text="Provider: not started" styleClass="metric-title"/>
+  </HBox>
+
+  <VBox spacing="8.0" styleClass="card" VBox.vgrow="ALWAYS">
+    <Label text="Explanation" styleClass="metric-title"/>
+    <TextArea fx:id="responseOutput" editable="false" prefHeight="320.0" wrapText="true"/>
+  </VBox>
+</VBox>

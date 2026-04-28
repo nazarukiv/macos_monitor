@@ -1,6 +1,7 @@
 module com.nazarukiv.macos_monitor {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.net.http;
 
     requires org.controlsfx.controls;
     requires com.github.oshi;
