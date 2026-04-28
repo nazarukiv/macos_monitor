@@ -114,6 +114,7 @@ public class DashboardController {
         TableColumn<ProcessInfo, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setPrefWidth(160);
+        nameColumn.getStyleClass().add("name-column");
 
         TableColumn<ProcessInfo, String> cpuColumn = new TableColumn<>("CPU (1 core %)");
         cpuColumn.setCellValueFactory(cell ->
@@ -122,10 +123,14 @@ public class DashboardController {
                 )
         );
         cpuColumn.setPrefWidth(80);
+        cpuColumn.getStyleClass().add("cpu-column");
+        cpuColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<ProcessInfo, Long> memoryColumn = new TableColumn<>("Memory");
         memoryColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage"));
         memoryColumn.setPrefWidth(120);
+        memoryColumn.getStyleClass().add("memory-column");
+        memoryColumn.setStyle("-fx-alignment: CENTER;");
 
         processTable.getColumns().setAll(nameColumn, cpuColumn, memoryColumn);
         processTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
